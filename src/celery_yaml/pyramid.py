@@ -1,3 +1,4 @@
+import os
 import pkg_resources
 
 from celery import Celery
@@ -26,4 +27,8 @@ def resolve_entrypoint(use: str) -> Celery:
 def includeme(config):
     settings = config.registry.settings
     app = resolve_entrypoint(settings["celery"].pop("use"))
-    app.config_from_object(settings["celery"])
+    celeryconf = settings["celery"]
+    if "CELERY_BROKER_URL" in os.environ:
+        # override the browker url
+        celeryconf["broker_url"] = os.environ["CELERY_BROKER_URL"]
+    app.config_from_object(celeryconf)
