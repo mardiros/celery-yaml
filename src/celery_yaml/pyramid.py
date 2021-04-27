@@ -26,5 +26,4 @@ def resolve_entrypoint(use: str) -> Celery:
 def includeme(config):
     settings = config.registry.settings
     app = resolve_entrypoint(settings["celery"].pop("use"))
-    loader = YamlLoader(app, settings["celery"], configure_logging = False)
-    loader.read_configuration()
+    app.config_from_object(settings["celery"])
