@@ -109,4 +109,9 @@ app:
 
 #### See full example in the demo directory:
 
+##### Pyramid with Celery 4
 https://github.com/mardiros/celery-yaml/tree/master/demo/pyramid-app
+
+##### Pyramid with Celery 5
+
+https://github.com/mardiros/celery-yaml/tree/master/demo/pyramid-app5

@@ -6,7 +6,7 @@ authors = ["Guillaume Gauvrit <guillaume@gauvr.it>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-celery = "^4"
+celery = "^5"
 celery-yaml = { version = "^0.1.2", extras = ["pyramid"] }
 pyramid = { version = ">=1.9", optional = true}
 waitress = "^2.0.0"
