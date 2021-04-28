@@ -1,0 +1,14 @@
+celery: &celery
+  broker_url: amqp://guest:guest@rabbitmq:5672/
+  result_backend: rpc://
+  imports:
+      - 'helloworld.tasks'
+
+app:
+  "use": "egg:pyramid_helloworld"
+  "pyramid.debug_notfound": true
+  "pyramid.debug_routematch": true
+  "pyramid.includes": []
+  "celery":
+    <<: *celery
+    "use": "egg:pyramid_helloworld"

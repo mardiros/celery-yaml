@@ -19,7 +19,7 @@ if celery_version.major < 5:
     @user_preload_options.connect
     def on_preload_parsed(options, **kwargs):
         config_path = options["yaml"]
-        app = kwargs['app']
+        app = kwargs["app"]
 
         if config_path is None:
             print("You must provide the --yaml argument")
@@ -39,9 +39,8 @@ def add_yaml_option(app):
     if celery_version.major < 5:
 
         def add_preload_arguments(parser):
-            parser.add_argument(
-                "--yaml", default=None, help=help
-            )
+            parser.add_argument("--yaml", default=None, help=help)
+
         app.user_options["preload"].add(add_preload_arguments)
 
     else:
@@ -49,13 +48,10 @@ def add_yaml_option(app):
         from click import Option
         from celery import bootsteps
 
-        app.user_options['preload'].add(
-            Option(['--yaml'], required=True, help=help)
-        )
+        app.user_options["preload"].add(Option(["--yaml"], required=True, help=help))
 
         class YamlBootstep(bootsteps.Step):
-
-            def __init__(self, parent, yaml: str="", **options):
+            def __init__(self, parent, yaml: str = "", **options):
                 try:
                     loader = YamlLoader(app, config=yaml)
                     loader.read_configuration()
@@ -65,7 +61,7 @@ def add_yaml_option(app):
                     sys.exit(-1)
                 super().__init__(parent, **options)
 
-        app.steps['worker'].add(YamlBootstep)
+        app.steps["worker"].add(YamlBootstep)
 
 
 class YamlLoader(celery.loaders.base.BaseLoader):
