@@ -1,3 +1,7 @@
+## Version 0.4.0 - 2022-01-20
+
+* Add an optional on_yaml_loaded event on the app.
+
 ## Version 0.3.0 - 2022-01-20
 
 * Update dependencies
