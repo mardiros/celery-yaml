@@ -11,8 +11,8 @@ license = "BSD-derived"
 python = "^3.7"
 celery = ">=4"
 pyramid = { version = ">=1.9", optional = true }
-plaster-yaml = { version = "^0.1.1", optional = true }
-PyYAML = "^5.4.1"
+plaster-yaml = { version = "^0.1.3", optional = true }
+PyYAML = "^6.0"
 
 [tool.poetry.extras]
 pyramid = ["pyramid", "plaster-yaml"]
@@ -20,8 +20,8 @@ pyramid = ["pyramid", "plaster-yaml"]
 [tool.poetry.dev-dependencies]
 black = "^21.4b0"
 isort = "^5.8.0"
-pytest = "^5.2"
-pyramid-helloworld = { version = "^0.2.0", extras = ["celery"] }
+pytest = "^6"
+pyramid-helloworld = { version = "^0.2.1", extras = ["celery"] }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
