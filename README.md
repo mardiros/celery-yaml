@@ -107,6 +107,27 @@ app:
 
 ```
 
+### More configuration
+
+if the celery app as a method `on_yaml_loaded` then the function
+is called with the data and the filepath in parameter.
+It may be used to get some config.
+
+Example
+
+```python
+from celery import Celery as CeleryBase
+
+
+class Celery(CeleryBase):
+
+    def on_yaml_loaded(self, data: Dict[str, Any], config_path: str):
+      ...
+
+```
+
+
+
 #### See full example in the examples directory:
 
 ##### Pyramid with Celery 4

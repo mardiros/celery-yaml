@@ -86,4 +86,7 @@ class YamlLoader(celery.loaders.base.BaseLoader):
             self.app.config_from_object(_conf["celery"])
             if self.configure_logging and "logging" in _conf:
                 dictConfig(_conf["logging"])
+
+            if hasattr(self.app, "on_yaml_loaded"):
+                getattr(self.app, "on_yaml_loaded")(_conf, config_path=self.config_path)
         return _conf["celery"]
