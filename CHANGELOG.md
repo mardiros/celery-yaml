@@ -1,3 +1,8 @@
+## 1.0.0 - Released on 2023-02-02
+
+* Improve typing
+* Add continuous integration
+
 ## Version 0.4.0 - 2022-01-20
 
 * Add an optional on_yaml_loaded event on the app.
