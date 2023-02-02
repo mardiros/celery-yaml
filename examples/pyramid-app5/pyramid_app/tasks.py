@@ -2,7 +2,6 @@ import logging
 
 from .backend import app
 
-
 log = logging.getLogger(__name__)
 
 

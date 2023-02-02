@@ -1,7 +1,7 @@
 import os
-from typing import Any, TYPE_CHECKING
-import pkg_resources
+from typing import TYPE_CHECKING, Any
 
+import pkg_resources
 from celery import Celery
 
 if TYPE_CHECKING:

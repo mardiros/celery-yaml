@@ -2,8 +2,8 @@ import logging
 
 from celery import Celery
 from celery.signals import task_failure
-from celery_yaml import add_yaml_option
 
+from celery_yaml import add_yaml_option
 
 app = Celery()
 add_yaml_option(app)

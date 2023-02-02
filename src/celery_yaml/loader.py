@@ -5,9 +5,9 @@ import sys
 from logging.config import dictConfig
 from typing import Any, Mapping
 
+import celery.loaders.base
 import yaml
 from celery import VERSION as celery_version  # type: ignore
-import celery.loaders.base
 from celery import Celery
 
 log = logging.getLogger(__name__)
@@ -46,8 +46,8 @@ def add_yaml_option(app: Celery) -> None:
 
     else:
 
-        from click import Option
         from celery import bootsteps
+        from click import Option
 
         app.user_options["preload"].add(Option(["--yaml"], required=True, help=help))
 
