@@ -1,7 +1,10 @@
 *.egg-info
 *.pyc
 *.swp
+.coverage
 .vscode
 .pytest_cache
+coverage.xml
 dist
+junit
 __pycache__
