@@ -8,7 +8,6 @@ It also handle help to configurate this application for Pyramid application.
 
 [![Continuous Integration](https://github.com/mardiros/celery-yaml/actions/workflows/main.yml/badge.svg)](https://github.com/mardiros/celery-yaml/actions/workflows/main.yml)
 
-
 [![Coverage Report](https://codecov.io/gh/mardiros/celery-yaml/branch/master/graph/badge.svg)](https://codecov.io/gh/mardiros/celery-yaml)
 
 ## Usage
