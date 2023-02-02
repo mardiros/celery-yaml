@@ -19,19 +19,30 @@ pyramid = ["pyramid", "plaster-yaml"]
 
 [tool.poetry.group.dev.dependencies]
 black = "^21.4b0"
+celery-stubs = "^0.1.2"
+coverage = {version = "^6.2", extras = ["toml"]}
 isort = "^5.8.0"
+flake8 = "^5"
 mypy = "^0.991"
 pytest = "^6"
+pytest-cov = "^4.0.0"
 pyramid-helloworld = { version = "^0.2.1", extras = ["celery"] }
 types-pyyaml = "^6.0.12.3"
 types-setuptools = "^65.7.0.4"
-celery-stubs = "^0.1.2"
-
 
 [[tool.mypy.overrides]]
 module = "sequoia_api_recovery.*"
 disallow_any_generics = true
 disallow_untyped_defs = true
+
+[tool.coverage.report]
+exclude_lines = [
+  "if TYPE_CHECKING:",
+  "except ImportError:",
+  "except pkg_resources.DistributionNotFound:",
+  "\\s+\\.\\.\\.$",
+  "# coverage-ignore",
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
