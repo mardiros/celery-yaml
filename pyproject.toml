@@ -18,7 +18,7 @@ PyYAML = "^6.0"
 pyramid = ["pyramid", "plaster-yaml"]
 
 [tool.poetry.group.dev.dependencies]
-black = "^21.4b0"
+black = "^22"
 celery-stubs = "^0.1.2"
 coverage = {version = "^6.2", extras = ["toml"]}
 isort = "^5.8.0"
@@ -31,7 +31,7 @@ types-pyyaml = "^6.0.12.3"
 types-setuptools = "^65.7.0.4"
 
 [[tool.mypy.overrides]]
-module = "sequoia_api_recovery.*"
+module = "celery_yaml.*"
 disallow_any_generics = true
 disallow_untyped_defs = true
 

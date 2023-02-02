@@ -19,7 +19,7 @@ def test_includeme():
     with open(fpath, "r") as stream:
         settings = yaml.safe_load(stream)
 
-    config = Configurator(settings=settings['app'])
+    config = Configurator(settings=settings["app"])
     includeme(config)
     assert app.conf.broker_url == "amqp://guest:guest@rabbitmq:5672/"
     assert app.conf.result_backend == "rpc://"

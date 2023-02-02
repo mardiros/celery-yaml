@@ -2,6 +2,7 @@
 import logging
 import os
 import sys
+from argparse import ArgumentParser
 from logging.config import dictConfig
 from typing import Any, Mapping
 
@@ -39,7 +40,7 @@ def add_yaml_option(app: Celery) -> None:
     help = "Celery configuration in a YAML file."
     if celery_version.major < 5:
 
-        def add_preload_arguments(parser):
+        def add_preload_arguments(parser: ArgumentParser) -> None:
             parser.add_argument("--yaml", default=None, help=help)
 
         app.user_options["preload"].add(add_preload_arguments)
@@ -52,7 +53,7 @@ def add_yaml_option(app: Celery) -> None:
         app.user_options["preload"].add(Option(["--yaml"], required=True, help=help))
 
         class YamlBootstep(bootsteps.Step):
-            def __init__(self, parent, yaml: str = "", **options):
+            def __init__(self, parent: Any, yaml: str = "", **options: Any) -> None:
                 try:
                     loader = YamlLoader(app, config=yaml)
                     loader.read_configuration()
@@ -76,7 +77,9 @@ class YamlLoader(celery.loaders.base.BaseLoader):
         self.configure_logging = configure_logging
         super(YamlLoader, self).__init__(app)
 
-    def read_configuration(self, env='CELERY_CONFIG_MODULE') -> Mapping[str, Any]:
+    def read_configuration(
+        self, env: str = "CELERY_CONFIG_MODULE"
+    ) -> Mapping[str, Any]:
         """Override this method to configure the celery app."""
         with open(self.config_path, "r") as stream:
             _conf = yaml.safe_load(stream)
