@@ -1,8 +1,8 @@
 import pathlib
 
 from celery import Celery
-from celery_yaml.loader import YamlLoader
 
+from celery_yaml.loader import YamlLoader
 
 config = str(pathlib.Path(__file__).parent / "config.yaml")
 

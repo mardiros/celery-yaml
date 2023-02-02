@@ -4,9 +4,8 @@ from pyramid.config import Configurator
 from pyramid.response import Response
 from pyramid.router import Router
 
-from .tasks import add
 from .backend import app
-
+from .tasks import add
 
 log = logging.getLogger(__name__)
 
