@@ -3,8 +3,8 @@ import pathlib
 import yaml
 from celery_yaml import includeme
 from celery_yaml.pyramid import resolve_entrypoint
-from pyramid.config import Configurator
-from pyramid_helloworld.backend import app
+from pyramid.config import Configurator  # type: ignore
+from pyramid_helloworld.backend import app  # type: ignore
 
 
 def test_resolve_entrypoint():
