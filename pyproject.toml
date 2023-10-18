@@ -6,6 +6,10 @@ readme = "README.md"
 authors = ["Guillaume Gauvrit <guillaume@gauvr.it>"]
 include = ["CHANGELOG.md"]
 license = "BSD-derived"
+packages = [
+    { include = "celery_yaml", from = "src" },
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -19,16 +23,20 @@ pyramid = ["pyramid", "plaster-yaml"]
 
 [tool.poetry.group.dev.dependencies]
 black = "^22"
+celery = "^5.2.0"
 celery-stubs = "^0.1.2"
 coverage = {version = "^6.2", extras = ["toml"]}
 isort = "^5.8.0"
 flake8 = "^5"
 mypy = "^0.991"
-pytest = "^6"
+pytest = "^7"
 pytest-cov = "^4.0.0"
-pyramid-helloworld = { version = "^0.2.1", extras = ["celery"] }
+pyramid-helloworld = { version = "^1.0.0", extras = ["celery"] }
 types-pyyaml = "^6.0.12.3"
 types-setuptools = "^65.7.0.4"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [[tool.mypy.overrides]]
 module = "celery_yaml.*"
@@ -45,5 +53,5 @@ exclude_lines = [
 ]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
