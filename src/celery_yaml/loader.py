@@ -91,6 +91,9 @@ class YamlLoader(celery.loaders.base.BaseLoader):
             if self.configure_logging and "logging" in _conf:
                 dictConfig(_conf["logging"])
 
+            # amqp is a cached_property that has to be refreshed
+            del self.app.amqp
+
             if hasattr(self.app, "on_yaml_loaded"):
                 getattr(self.app, "on_yaml_loaded")(_conf, config_path=self.config_path)
         return _conf["celery"]
