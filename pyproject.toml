@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "celery-yaml"
-version = "1.0.0"
+version = "1.0.1"
 description = "Easy configuration for celery app using Yaml file"
 readme = "README.md"
 authors = ["Guillaume Gauvrit <guillaume@gauvr.it>"]

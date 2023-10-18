@@ -1,3 +1,7 @@
+## 1.0.1 - Released on 2023-10-18
+
+* Tests with celery 5, keep celery 4 
+
 ## 1.0.0 - Released on 2023-02-02
 
 * Improve typing
