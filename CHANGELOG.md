@@ -1,3 +1,6 @@
+## 1.0.2 - Released on 2023-10-24
+* Remove the bootstep for celery 5, it just not works.
+
 ## 1.0.1 - Released on 2023-10-18
 
 * Tests with celery 5, keep celery 4 
