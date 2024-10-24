@@ -33,7 +33,7 @@ jobs:
       id: release-version
       run: |
         if [ "${{ github.event_name }}" == "push" ]; then
-          echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "release_version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           if [ "${{ github.ref_name }}" == "dry-run" ]; then
             echo "dry_run=true" >> $GITHUB_OUTPUT
           else
@@ -41,7 +41,7 @@ jobs:
           fi
         else
           version="${{ github.event.inputs.tag || 'dry-run' }}"
-          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "release_version=${version}" >> $GITHUB_OUTPUT
           if [ "${version}" == "dry-run" ]; then
             echo "dry_run=true" >> $GITHUB_OUTPUT
           else
