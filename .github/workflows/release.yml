@@ -22,7 +22,7 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     outputs:
-      release_version: ${{ steps.release-version.outputs.version }}
+      release_version: ${{ steps.release-version.outputs.release_version }}
       dry-run: ${{ steps.release-version.outputs.dry_run }}
 
     steps:
