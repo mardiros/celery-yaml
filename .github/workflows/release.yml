@@ -22,8 +22,8 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     outputs:
-      release_version: "release-version.outputs.version"
-      dry_run: "release-version.outputs.dry_run"
+      release_version: ${{ steps.release-version.outputs.version }}
+      dry-run: ${{ steps.release-version.outputs.dry_run == 'true' }}
 
     steps:
     - name: Checkout repository
@@ -57,7 +57,7 @@ jobs:
     uses: ./.github/workflows/build-artifacts.yml
     with:
       release-version: ${{ needs.plan.outputs.release_version }}
-      dry-run: ${{ needs.plan.outputs.dry_run == 'true' }}
+      dry-run: ${{ needs.plan.outputs.dry-run }}
       python-version: '3.12'
 
   tests-artifacts:
@@ -66,7 +66,7 @@ jobs:
     uses: ./.github/workflows/tests-artifacts.yml
     with:
       release-version: ${{ needs.plan.outputs.release_version }}
-      dry-run: ${{ needs.plan.outputs.dry_run == 'true' }}
+      dry-run: ${{ needs.plan.outputs.dry-run }}
 
   publish-pypi:
     needs:
@@ -74,6 +74,6 @@ jobs:
     uses: ./.github/workflows/publish-pypi.yml
     with:
       release-version: ${{ needs.plan.outputs.release_version }}
-      dry-run: ${{ needs.plan.outputs.dry_run == 'true' }}
+      dry-run: ${{ needs.plan.outputs.dry-run }}
     secrets:
       PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
