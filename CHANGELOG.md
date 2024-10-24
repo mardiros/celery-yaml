@@ -1,3 +1,18 @@
+## 2.1.0 - Released on 2024-10-24
+
+* Now configuration can contains environment variable that
+
+  will be replaced before configurating the app.
+  * Only ${VARIABLE} will be replaced if present in the os.environ
+  * A default value can be specified using ${VARIABLE-default-value}
+
+This feature is great at injecting secrets in the configuration
+and keep code simple.
+
+* A `--yaml-key` has been added to configure the celery configuration dict.
+  by default its still `celery`.
+
+
 ## 2.0.0 - Released on 2024-10-24
 * Drop support of python < 3.9
 * Drop support of Celery 4
