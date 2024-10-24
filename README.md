@@ -1,4 +1,4 @@
-[![Continuous Integration](https://github.com/mardiros/celery-yaml/actions/workflows/main.yml/badge.svg)](https://github.com/mardiros/celery-yaml/actions/workflows/main.yml)
+[![Continuous Integration](https://github.com/mardiros/celery-yaml/actions/workflows/tests.yml/badge.svg)](https://github.com/mardiros/celery-yaml/actions/workflows/tests.yml)
 [![Coverage Report](https://codecov.io/gh/mardiros/celery-yaml/branch/master/graph/badge.svg)](https://codecov.io/gh/mardiros/celery-yaml)
 
 # Easy Configuration For Celery App Using a Yaml File
