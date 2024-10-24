@@ -1,14 +1,14 @@
 """Helper for celery."""
+
 import logging
 import os
 import sys
-from argparse import ArgumentParser
 from logging.config import dictConfig
 from typing import Any, Mapping
 
+from click import Option
 import celery.loaders.base
 import yaml
-from celery import VERSION as celery_version  # type: ignore
 from celery import Celery
 from celery.signals import user_preload_options  # type: ignore
 
@@ -29,20 +29,8 @@ def on_preload_parsed(options: Mapping[str, Any], **kwargs: Any) -> None:
 
 
 def add_yaml_option(app: Celery) -> None:
-
     help = "Celery configuration in a YAML file."
-    if celery_version.major < 5:
-
-        def add_preload_arguments(parser: ArgumentParser) -> None:
-            parser.add_argument("--yaml", default=None, help=help)
-
-        app.user_options["preload"].add(add_preload_arguments)
-
-    else:
-
-        from click import Option
-
-        app.user_options["preload"].add(Option(["--yaml"], required=True, help=help))
+    app.user_options["preload"].add(Option(["--yaml"], required=True, help=help))
 
 
 class YamlLoader(celery.loaders.base.BaseLoader):

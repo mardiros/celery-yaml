@@ -23,7 +23,6 @@ pyramid = ["pyramid", "plaster-yaml"]
 [tool.poetry.group.dev.dependencies]
 black = "^22"
 celery = "^5.2.0"
-celery-stubs = "^0.1.2"
 coverage = {version = "^6.2", extras = ["toml"]}
 isort = "^5.8.0"
 flake8 = "^5"
@@ -41,6 +40,10 @@ testpaths = ["tests"]
 module = "celery_yaml.*"
 disallow_any_generics = true
 disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "celery.*"
+ignore_missing_imports = true
 
 [tool.coverage.report]
 exclude_lines = [
