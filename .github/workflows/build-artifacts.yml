@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   sdist:
-    name: "Build tarball for ${{ inputs.release-version }} ${{ inputs.dry-run && '(dry-run)' || '' }}"
+    name: Build artifact for ${{ inputs.release-version }} ${{ inputs.dry-run && '(dry-run)' || '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
