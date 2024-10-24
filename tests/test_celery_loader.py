@@ -3,7 +3,7 @@ from typing import Any, Mapping
 
 from celery import Celery
 
-from celery_yaml.loader import YamlLoader
+from celery_yaml.loader import YamlLoader, add_yaml_option
 
 config = str(pathlib.Path(__file__).parent / "config.yaml")
 config_no_broker = str(pathlib.Path(__file__).parent / "config-no-broker.yaml")
@@ -12,6 +12,10 @@ config_envsub = str(pathlib.Path(__file__).parent / "config-envsub.yaml")
 
 class CeleryApp(Celery):
     database_dsn: str
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        add_yaml_option(self)
 
     def on_yaml_loaded(self, config: Mapping[str, Any], config_path: str) -> None:
         self.database_dsn = config["app"]["database_dsn"]

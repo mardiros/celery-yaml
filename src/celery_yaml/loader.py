@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 @user_preload_options.connect
 def on_preload_parsed(options: Mapping[str, Any], **kwargs: Any) -> None:
     config_path = options["yaml"]
-    config_key = options["yaml-key"]
+    config_key = options["yaml_key"]
     app = kwargs["app"]
 
     if config_path is None:

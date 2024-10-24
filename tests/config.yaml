@@ -16,3 +16,4 @@ app:
   "celery":
     <<: *celery
     "use": "egg:pyramid_helloworld"
+  "database_dsn": "xxx"
