@@ -17,7 +17,7 @@ on:
 
 jobs:
   pypi-publish:
-    name: Upload to PyPI
+    name: Upload to PyPI ${{ inputs.release-version }} ${{ inputs.dry-run && '(dry-run)' || '' }}
     runs-on: ubuntu-latest
     if: ${{ !inputs.dry-run }}
 
