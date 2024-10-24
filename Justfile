@@ -41,8 +41,6 @@ changelog:
 
 publish:
     git commit -am "Release $(poetry version -s)"
-    poetry build
-    poetry publish
     git push
-    git tag "$(poetry version -s)"
-    git push origin "$(poetry version -s)"
+    git tag "v$(poetry version -s)"
+    git push origin "v$(poetry version -s)"

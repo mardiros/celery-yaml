@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'       # Automatically trigger on version tags
+      - 'dry-run'
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release Tag"
+        required: true
+        default: "dry-run"
+        type: string
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      release_version: "release-version.outputs.version"
+      dry_run: "release-version.outputs.dry_run"
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set Release Version
+      id: release-version
+      run: |
+        if [ "${{ github.event_name }}" == "push" ]; then
+          echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          if [ "${{ github.ref_name }}" == "dry-run" ]; then
+            echo "dry_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "dry_run=false" >> $GITHUB_OUTPUT
+          fi
+        else
+          version="${{ github.event.inputs.tag || 'dry-run' }}"
+          echo "version=${version}" >> $GITHUB_OUTPUT
+          if [ "${version}" == "dry-run" ]; then
+            echo "dry_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "dry_run=false" >> $GITHUB_OUTPUT
+          fi
+        fi
+    - name: Display Release Version
+      run: echo "The release version is ${{ steps.release-version.outputs.version }}"
+
+  build-artifacts:
+    needs:
+      - plan
+    uses: ./.github/workflows/build-artifacts.yml
+    with:
+      release-version: ${{ needs.plan.outputs.release_version }}
+      dry-run: ${{ needs.plan.outputs.dry_run == 'true' }}
+
+  tests-artifacts:
+    needs:
+      - build-wheels
+      - build-sdist
+    uses: ./.github/workflows/tests-artifacts.yml
+    with:
+      release-version: ${{ needs.plan.outputs.release_version }}
+      dry-run: ${{ needs.plan.outputs.dry_run == 'true' }}
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+  publish-pypi:
+    needs:
+      - tests-artifacts
+    uses: ./.github/workflows/publish-pypi.yml
+    with:
+      release-version: ${{ needs.plan.outputs.release_version }}
+      dry-run: ${{ needs.plan.outputs.dry_run == 'true' }}
+    secrets:
+      PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
