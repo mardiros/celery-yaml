@@ -2,7 +2,11 @@ celery: &celery
   broker_url: amqp://guest:guest@rabbitmq:5672/
   result_backend: rpc://
   imports:
-      - 'helloworld.tasks'
+    - "helloworld.tasks"
+
+celery2:
+  broker_url: amqp://guest:guest@rabbitmq:5672/other
+
 
 app:
   "use": "egg:pyramid_helloworld"
@@ -12,3 +16,4 @@ app:
   "celery":
     <<: *celery
     "use": "egg:pyramid_helloworld"
+  "database_dsn": "xxx"
