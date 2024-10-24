@@ -1,0 +1,16 @@
+celery: &celery
+  broker_url: ${BROKER_URL-amqp://guest:guest@rabbitmq:5672/}
+  result_backend: ${RESULT_BACKEND-redis://redis/0}
+  imports:
+      - 'helloworld.tasks'
+
+app:
+  "use": "egg:pyramid_helloworld"
+  "pyramid.debug_notfound": true
+  "pyramid.debug_routematch": true
+  "pyramid.includes": []
+  "celery":
+    <<: *celery
+    "use": "egg:pyramid_helloworld"
+
+  "database_dsn": ${DATABASE_DSN}
