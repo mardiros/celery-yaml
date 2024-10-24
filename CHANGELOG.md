@@ -1,3 +1,7 @@
+## 2.0.0 - Released on 2024-10-24
+* Drop support of python < 3.9
+* Drop support of Celery 4
+
 ## 1.0.2 - Released on 2023-10-24
 * Remove the bootstep for celery 5, it just not works.
 
