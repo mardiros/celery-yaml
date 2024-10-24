@@ -6,11 +6,12 @@ import sys
 from logging.config import dictConfig
 from typing import Any, Mapping
 
-from click import Option
 import celery.loaders.base
+import envsub
 import yaml
 from celery import Celery
 from celery.signals import user_preload_options  # type: ignore
+from click import Option
 
 log = logging.getLogger(__name__)
 
@@ -48,16 +49,17 @@ class YamlLoader(celery.loaders.base.BaseLoader):
         self, env: str = "CELERY_CONFIG_MODULE"
     ) -> Mapping[str, Any]:
         """Override this method to configure the celery app."""
-        with open(self.config_path, "r") as stream:
-            _conf = yaml.safe_load(stream)
-            if "CELERY_BROKER_URL" in os.environ:
-                # override the browker url
-                _conf["celery"]["broker_url"] = os.environ["CELERY_BROKER_URL"]
+        with open(self.config_path, "r") as downstream:
+            with envsub.sub(downstream) as upstream:
+                _conf = yaml.safe_load(upstream)
+        if "CELERY_BROKER_URL" in os.environ:
+            # override the browker url
+            _conf["celery"]["broker_url"] = os.environ["CELERY_BROKER_URL"]
 
-            self.app.config_from_object(_conf["celery"])
-            if self.configure_logging and "logging" in _conf:
-                dictConfig(_conf["logging"])
+        self.app.config_from_object(_conf["celery"])
+        if self.configure_logging and "logging" in _conf:
+            dictConfig(_conf["logging"])
 
-            if hasattr(self.app, "on_yaml_loaded"):
-                getattr(self.app, "on_yaml_loaded")(_conf, config_path=self.config_path)
+        if hasattr(self.app, "on_yaml_loaded"):
+            getattr(self.app, "on_yaml_loaded")(_conf, config_path=self.config_path)
         return _conf["celery"]
