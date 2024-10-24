@@ -11,6 +11,9 @@ on:
       dry-run:
         required: true
         type: boolean
+      python-version:
+        required: true
+        type: string
   pull_request:
     paths:
       # When we change pyproject.toml, we want to ensure that the maturin builds still work.
@@ -29,6 +32,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
 
       - name: Run image
         uses: abatilo/actions-poetry@v2
