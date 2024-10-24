@@ -61,3 +61,11 @@ def test_loader_celery_broker_subenv(monkeypatch):
     assert app.conf.result_backend == "redis://redis/0"
 
     assert app.database_dsn == "postgresql://scott:tiger@db/zoo"
+
+
+def test_loader_celery_from_other_key(monkeypatch):
+    monkeypatch.setenv("DATABASE_DSN", "postgresql://scott:tiger@db/zoo")
+    app = Celery()
+    conf = YamlLoader(app, config, config_key="celery2", configure_logging=False)
+    conf.read_configuration()
+    assert app.conf.broker_url == "amqp://guest:guest@rabbitmq:5672/other"
