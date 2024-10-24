@@ -35,10 +35,7 @@ jobs:
         with:
           python-version: ${{ inputs.python-version }}
 
-      - name: Run image
-        uses: abatilo/actions-poetry@v2
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
+      - uses: abatilo/actions-poetry@v2
 
       - name: Install the project
         run: poetry install
