@@ -22,21 +22,20 @@ services:
     volumes:
       - ./development.yaml:/srv/pyramid_app/development.yaml
       - ./pyramid_app/:/srv/pyramid_app/pyramid_app
-      - ../../src/celery_yaml/:/home/pyramid_app/.cache/pypoetry/virtualenvs/pyramid-app-r2bec4cg-py3.8/lib/python3.8/site-packages/celery_yaml
 
   celery_backend:
     build: .
-    command: 
-      - poetry 
-      - run 
-      - celery 
-      - worker 
+    command:
+      - poetry
+      - run
+      - celery
+      - -A
+      - pyramid_app.backend.app
+      - worker
       - -l
       - DEBUG
       - -c
       - "1"
-      - -A
-      - pyramid_app.backend.app
       - --yaml
       - development.yaml
       - -Q
@@ -47,13 +46,8 @@ services:
       - rabbitmq
     environment:
       - CELERY_BROKER_URL=${CELERY_BROKER_URL}
-    volumes:
-      - ./development.yaml:/srv/pyramid_app/development.yaml
-      - ./pyramid_app/:/srv/pyramid_app/pyramid_app
-      - ../../src/celery_yaml/:/home/pyramid_app/.cache/pypoetry/virtualenvs/pyramid-app-r2bec4cg-py3.8/lib/python3.8/site-packages/celery_yaml
-      # - /home/guillaume/.cache/pypoetry/virtualenvs/pyramid-app-If-I9PfT-py3.9/lib/python3.9/site-packages/click:/home/pyramid_app/.cache/pypoetry/virtualenvs/pyramid-app-r2bec4cg-py3.8/lib/python3.8/site-packages/click
   rabbitmq:
-    image: "rabbitmq:3.8.9-management-alpine"
+    image: "rabbitmq:4-management-alpine"
     networks:
       - internal
       - proxy

@@ -1,6 +1,6 @@
 # Pyramid and Celery using Yaml Configuration Demo
 
-This pyramid app use Celery 4 as a backend to compute addition.
+This pyramid app use Celery 5 as a backend to compute addition.
 
 ## Configuration
 

@@ -11,14 +11,6 @@ It also handle help to configurate this application for Pyramid application.
 
 ## Usage
 
-### With Celery 4
-
-```sh
-celery worker -A my_application.module_containing_my.app --yaml development.yaml ...
-```
-
-### With Celery 5
-
 ```sh
 celery -A my_application.module_containing_my.app worker --yaml development.yaml ...
 ```
@@ -46,7 +38,7 @@ celery:
   result_backend: 'rpc://'
   imports:
       - my_application.tasks
-  # see all settings in the celery docs: 
+  # see all settings in the celery docs:
   # https://docs.celeryproject.org/en/stable/userguide/configuration.html
 
 logging:
