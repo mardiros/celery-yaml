@@ -126,9 +126,4 @@ class Celery(CeleryBase):
 
 #### See full example in the examples directory:
 
-##### Pyramid with Celery 4
 https://github.com/mardiros/celery-yaml/tree/master/examples/pyramid-app
-
-##### Pyramid with Celery 5
-
-https://github.com/mardiros/celery-yaml/tree/master/examples/pyramid-app5
