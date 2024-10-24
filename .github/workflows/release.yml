@@ -57,8 +57,7 @@ jobs:
 
   tests-artifacts:
     needs:
-      - build-wheels
-      - build-sdist
+      - build-artifacts
     uses: ./.github/workflows/tests-artifacts.yml
     with:
       release-version: ${{ needs.plan.outputs.release_version }}
