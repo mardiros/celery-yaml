@@ -63,6 +63,7 @@ jobs:
 
   tests-artifacts:
     needs:
+      - plan
       - build-artifacts
     uses: ./.github/workflows/tests-artifacts.yml
     with:
@@ -71,6 +72,7 @@ jobs:
 
   publish-pypi:
     needs:
+      - plan
       - tests-artifacts
     uses: ./.github/workflows/publish-pypi.yml
     with:
