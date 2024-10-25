@@ -16,7 +16,7 @@ def test_resolve_entrypoint():
 def test_includeme():
     fpath = str(pathlib.Path(__file__).parent / "config.yaml")
 
-    with open(fpath, "r") as stream:
+    with open(fpath) as stream:
         settings = yaml.safe_load(stream)
 
     config = Configurator(settings=settings["app"])

@@ -3,15 +3,16 @@
 import logging
 import os
 import sys
+from collections.abc import Mapping
 from logging.config import dictConfig
-from typing import Any, Mapping
+from typing import Any
 
-from click import Option
 import celery.loaders.base
 import envsub
 import yaml
 from celery import Celery
 from celery.signals import user_preload_options  # type: ignore
+from click import Option
 
 log = logging.getLogger(__name__)
 
@@ -60,13 +61,13 @@ class YamlLoader(celery.loaders.base.BaseLoader):
         self.config_path = config
         self.config_key = config_key
         self.configure_logging = configure_logging
-        super(YamlLoader, self).__init__(app)
+        super().__init__(app)
 
     def read_configuration(
         self, env: str = "CELERY_CONFIG_MODULE"
     ) -> Mapping[str, Any]:
         """Override this method to configure the celery app."""
-        with open(self.config_path, "r") as downstream:
+        with open(self.config_path) as downstream:
             with envsub.sub(downstream) as upstream:
                 _conf = yaml.safe_load(upstream)
         _celery_config = _conf[self.config_key]
@@ -79,5 +80,5 @@ class YamlLoader(celery.loaders.base.BaseLoader):
             dictConfig(_conf["logging"])
 
         if hasattr(self.app, "on_yaml_loaded"):
-            getattr(self.app, "on_yaml_loaded")(_conf, config_path=self.config_path)
+            self.app.on_yaml_loaded(_conf, config_path=self.config_path)
         return _celery_config
