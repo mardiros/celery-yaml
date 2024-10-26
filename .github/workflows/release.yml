@@ -52,9 +52,13 @@ jobs:
     - name: Display Release Version
       run: echo "The release version is ${{ steps.release-version.outputs.release_version }}"
 
+  unit-tests:
+    uses: ./.github/workflows/tests.yml
+
   build-artifacts:
     needs:
       - plan
+      - unit-tests
     uses: ./.github/workflows/build-artifacts.yml
     with:
       release-version: ${{ needs.plan.outputs.release_version }}
