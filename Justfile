@@ -2,7 +2,7 @@ package := 'celery_yaml'
 default_test_suite := 'tests'
 
 install:
-    poetry install --with dev
+    uv sync --group dev
 
 lint:
     poetry run ruff check .
@@ -18,22 +18,22 @@ lf:
 cov test_suite=default_test_suite:
     rm -f .coverage
     rm -rf htmlcov
-    poetry run pytest --cov-report=html --cov={{package}} {{test_suite}}
+    uv run pytest --cov-report=html --cov={{package}} {{test_suite}}
     xdg-open htmlcov/index.html
 
 mypy:
-    poetry run mypy src/ tests/
+    uv run mypy src/ tests/
 
 fmt:
-    poetry run ruff check --fix .
-    poetry run ruff format src tests
+    uv run ruff check --fix .
+    uv run ruff format src tests
 
 release major_minor_patch: test && changelog
-    poetry version {{major_minor_patch}}
-    poetry install
+    uv version {{major_minor_patch}}
+    uv install
 
 changelog:
-    poetry run python scripts/write_changelog.py
+    uv run python scripts/write_changelog.py
     cat CHANGELOG.md >> CHANGELOG.md.new
     rm CHANGELOG.md
     mv CHANGELOG.md.new CHANGELOG.md
