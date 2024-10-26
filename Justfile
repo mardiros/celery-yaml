@@ -5,7 +5,7 @@ install:
     poetry install --with dev
 
 lint:
-    poetry run flake8 && echo "$(tput setaf 10)Success: no lint issue$(tput setaf 7)"
+    poetry run ruff check .
 
 test: lint mypy unittest
 
@@ -24,9 +24,9 @@ cov test_suite=default_test_suite:
 mypy:
     poetry run mypy src/ tests/
 
-black:
-    poetry run isort .
-    poetry run black .
+fmt:
+    poetry run ruff check --fix .
+    poetry run ruff format src tests
 
 release major_minor_patch: test && changelog
     poetry version {{major_minor_patch}}
