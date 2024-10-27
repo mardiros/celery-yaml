@@ -5,15 +5,15 @@ install:
     uv sync --group dev
 
 lint:
-    poetry run ruff check .
+    uv run ruff check .
 
 test: lint mypy unittest
 
 unittest test_suite=default_test_suite:
-    poetry run pytest -sxv {{test_suite}}
+    uv run pytest -sxv {{test_suite}}
 
 lf:
-    poetry run pytest -sxvvv --lf
+    uv run pytest -sxvvv --lf
 
 cov test_suite=default_test_suite:
     rm -f .coverage
@@ -29,8 +29,9 @@ fmt:
     uv run ruff format src tests
 
 release major_minor_patch: test && changelog
-    uv version {{major_minor_patch}}
-    uv install
+    # uvx pdm self add pdm-bump
+    uvx pdm bump {{major_minor_patch}}
+    uv sync
 
 changelog:
     uv run python scripts/write_changelog.py
@@ -40,7 +41,7 @@ changelog:
     $EDITOR CHANGELOG.md
 
 publish:
-    git commit -am "Release $(poetry version -s)"
+    git commit -am "Release $(uv run scripts/get_version.py)"
     git push
-    git tag "v$(poetry version -s)"
-    git push origin "v$(poetry version -s)"
+    git tag "v$(uv run scripts/get_version.py)"
+    git push origin "v$(uv run scripts/get_version.py)"
