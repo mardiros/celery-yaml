@@ -8,3 +8,4 @@ coverage.xml
 dist
 junit
 __pycache__
+.pdm-python
