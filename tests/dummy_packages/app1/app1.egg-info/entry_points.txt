@@ -1,0 +1,3 @@
+[celery_yaml.app]
+app_ko = app1:app_ko
+app_ok = app1:app_ok
