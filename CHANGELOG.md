@@ -1,5 +1,7 @@
-## 2.1.0 - Released on 2024-10-24
+## 2.1.1 - Released on 2024-10-27
+* Remove setuptools' `pkg_resources` to resolve entrypoints for pyramid.
 
+## 2.1.0 - Released on 2024-10-24
 * Now configuration can contains environment variable that
 
   will be replaced before configurating the app.
