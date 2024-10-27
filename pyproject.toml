@@ -6,6 +6,12 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = ["celery>=5.4.0,<6", "PyYAML>=6.0.0,<7", "envsub>=0.1.15,<1"]
 
+[project.urls]
+Homepage = "https://github.com/mardiros/celery-yaml"
+Documentation = "https://github.com/mardiros/celery-yaml/blob/main/README.md"
+Repository = "https://github.com/mardiros/celery-yaml.git"
+Issues = "https://github.com/mardiros/celery-yaml/issues"
+Changelog = "https://github.com/mardiros/celery-yaml/blob/main/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
