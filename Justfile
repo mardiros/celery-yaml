@@ -2,7 +2,7 @@ package := 'celery_yaml'
 default_test_suite := 'tests'
 
 install:
-    uv sync --group dev
+    uv sync --group dev --group pyramid
 
 lint:
     uv run ruff check .
@@ -45,3 +45,12 @@ publish:
     git push
     git tag "v$(uv run scripts/get_version.py)"
     git push origin "v$(uv run scripts/get_version.py)"
+
+#[doc("write eggs for testing")]
+write_eggs:
+    #!/bin/bash
+    for app in tests/dummy_packages/*; do
+        pushd . > /dev/null
+        cd $app && python setup.py egg_info
+        popd > /dev/null
+    done

@@ -1,8 +1,15 @@
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-import pkg_resources
 from celery import Celery
+
+try:
+    from plaster_yaml.loader import resolve_use
+except ImportError:
+
+    def resolve_use(use: str, entrypoint: str) -> Any:
+        raise LookupError("Install celery_yaml[pyramid]")
+
 
 if TYPE_CHECKING:
     from pyramid import Configurator  # type: ignore
@@ -10,20 +17,7 @@ if TYPE_CHECKING:
 
 def resolve_entrypoint(use: str) -> Celery:
     entrypoint = "celery_yaml.app"
-    try:
-        pkg, name = use.split("#")
-    except ValueError:
-        pkg, name = use, "main"
-    try:
-        scheme, pkg = pkg.split(":")
-    except ValueError:
-        scheme = "egg"
-    if scheme != "egg":
-        raise ValueError(f"{use}: unsupported scheme {scheme}")
-
-    distribution = pkg_resources.get_distribution(pkg)
-    runner = distribution.get_entry_info(entrypoint, name)
-    app = runner.resolve() if runner else None
+    app = resolve_use(use, entrypoint)
     if not isinstance(app, Celery):
         raise ValueError(f"{use} does not point to a valid Celery instance.")
     return app

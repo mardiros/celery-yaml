@@ -33,13 +33,15 @@ excludes = ["tests"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[tool.mypy]
+exclude = ["tests/dummy_packages"]
 [[tool.mypy.overrides]]
 module = "celery_yaml.*"
 disallow_any_generics = true
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
-module = "celery.*"
+module = ["celery.*", "plaster_yaml.*"]
 ignore_missing_imports = true
 
 [tool.ruff]
