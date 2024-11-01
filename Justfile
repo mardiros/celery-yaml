@@ -29,8 +29,17 @@ fmt:
     uv run ruff format src tests
 
 release major_minor_patch: test && changelog
-    # uvx pdm self add pdm-bump
-    uvx pdm bump {{major_minor_patch}}
+    #! /bin/bash
+    # Try to bump the version first
+    if ! uvx pdm bump {{major_minor_patch}}; then
+        # If it fails, check if pdm-bump is installed
+        if ! uvx pdm self list | grep -q pdm-bump; then
+            # If not installed, add pdm-bump
+            uvx pdm self add pdm-bump
+        fi
+        # Attempt to bump the version again
+        uvx pdm bump {{major_minor_patch}}
+    fi
     uv sync
 
 changelog:
