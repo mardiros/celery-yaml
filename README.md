@@ -101,15 +101,16 @@ app:
     <<: *celery
     "use": "egg:pyramid_app"
 
+foo: "bar"
 ```
 
 ### More configuration
 
 if the celery app as a method `on_yaml_loaded` then the function
 is called with the data and the filepath in parameter.
-It may be used to get some config.
+It may be used to get mode configuration available readed from the yaml file.
 
-Example
+#### Example
 
 ```python
 from celery import Celery as CeleryBase
@@ -117,11 +118,34 @@ from celery import Celery as CeleryBase
 
 class Celery(CeleryBase):
 
-    def on_yaml_loaded(self, data: Dict[str, Any], config_path: str):
-      ...
+    def on_yaml_loaded(self, data: dict[str, Any], config_path: str):
+        data['foo']  # you can access to the value of foo here
 
 ```
 
+This is particullary usefull for depenency injection purpose.
+
+
+#### Environment substitution
+
+```yaml
+celery:
+  broker_url: ${CELERY_BROKER_URL}
+  result_backend: ${CELERY_BACKEND_RESULT}
+  imports:
+      - pyramid_app.tasks
+
+database_dsn: ${DATABASE_DSN}
+```
+
+The `CELERY_BROKER_URL` and `CELERY_BACKEND_RESULT` environment variable
+are interpreted by celery, so can be outside your yaml file, but, it is not
+True for all the variable, using celery-yaml, you can still inject configuration
+in the yaml that are substituted in the configuration during the yaml load.
+
+This is particullary usefull to keep your configuration structured but keep
+secrets in environment variable, for security reason. And also to build docker
+container that can be easily customizable.
 
 
 #### See full example in the examples directory:
