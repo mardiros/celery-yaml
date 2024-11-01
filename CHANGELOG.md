@@ -1,3 +1,7 @@
+## 2.1.2 - Released on 2024-11-01
+* Update README
+* Update the CI
+
 ## 2.1.1 - Released on 2024-10-27
 * Remove setuptools' `pkg_resources` to resolve entrypoints for pyramid.
 

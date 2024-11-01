@@ -1,6 +1,6 @@
 [project]
 name = "celery-yaml"
-version = "2.1.1"
+version = "2.1.2"
 description = "Easy configuration for celery app using Yaml file"
 authors = [{ name = "Guillaume Gauvrit", email = "guillaume@gauvr.it" }]
 readme = "README.md"
