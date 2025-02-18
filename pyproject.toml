@@ -5,7 +5,8 @@ description = "Easy configuration for celery app using Yaml file"
 authors = [{ name = "Guillaume Gauvrit", email = "guillaume@gauvr.it" }]
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["celery>=5.4.0,<6", "PyYAML>=6.0.0,<7", "envsub>=0.1.15,<1"]
+license = { text = "MIT" }
+dependencies = ["celery>=5.4.0,<6", "pyyaml>=6.0.0,<7", "envsub>=0.1.15,<1"]
 
 [project.urls]
 Homepage = "https://github.com/mardiros/celery-yaml"
