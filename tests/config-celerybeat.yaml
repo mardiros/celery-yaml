@@ -1,0 +1,11 @@
+celery:
+  broker_url: amqp://guest:guest@rabbitmq:5672/
+  imports:
+    - "helloworld.tasks"
+  beat_schedule:
+    beat_it:
+      task: beat_it
+      schedule:
+        hour: 9
+        minute: 0
+        day_of_week: 1

@@ -57,6 +57,7 @@ select = [
     "UP",  # alter when better syntax is available
     "RUF", #  the ruff devleoper's own rules
 ]
+ignore = ["UP006", "UP035"]
 
 [tool.coverage.report]
 exclude_lines = [
