@@ -3,14 +3,15 @@
 import logging
 import os
 import sys
-from collections.abc import Mapping
+from collections.abc import Iterator, Mapping
 from logging.config import dictConfig
-from typing import Any
+from typing import Any, Tuple
 
 import celery.loaders.base
 import envsub
 import yaml
 from celery import Celery
+from celery.schedules import crontab
 from celery.signals import user_preload_options  # type: ignore
 from click import Option
 
@@ -46,6 +47,13 @@ def add_yaml_option(app: Celery) -> None:
     )
 
 
+def build_crontab(beat_schedule: Mapping[str, Any]) -> Iterator[Tuple[str, Any]]:
+    for key, val in beat_schedule.items():
+        if isinstance(val["schedule"], dict):
+            val["schedule"] = crontab(**val["schedule"])
+        yield key, val
+
+
 class YamlLoader(celery.loaders.base.BaseLoader):
     """Celery loader based on yaml file."""
 
@@ -71,14 +79,19 @@ class YamlLoader(celery.loaders.base.BaseLoader):
             with envsub.sub(downstream) as upstream:
                 _conf = yaml.safe_load(upstream)
         _celery_config = _conf[self.config_key]
+
         if "CELERY_BROKER_URL" in os.environ:
             # override the browker url
             _celery_config["broker_url"] = os.environ["CELERY_BROKER_URL"]
 
+        if "beat_schedule" in _celery_config:
+            _celery_config["beat_schedule"] = dict(
+                build_crontab(_celery_config["beat_schedule"])
+            )
+
         self.app.config_from_object(_celery_config)
         if self.configure_logging and "logging" in _conf:
             dictConfig(_conf["logging"])
-
         if hasattr(self.app, "on_yaml_loaded"):
             self.app.on_yaml_loaded(_conf, config_path=self.config_path)
         return _celery_config
