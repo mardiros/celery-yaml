@@ -1,3 +1,6 @@
+## 2.2.0 - Released on 2025-04-17
+* Implement crontab for schedule. 
+
 ## 2.1.2 - Released on 2024-11-01
 * Update README
 * Update the CI
