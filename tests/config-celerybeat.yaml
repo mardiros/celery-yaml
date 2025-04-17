@@ -3,7 +3,10 @@ celery:
   imports:
     - "helloworld.tasks"
   beat_schedule:
-    beat_it:
+    beat_interval:
+      task: beat_it
+      schedule: 10
+    beat_crontab:
       task: beat_it
       schedule:
         hour: 9

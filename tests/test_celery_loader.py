@@ -77,24 +77,24 @@ def test_beat_loader():
     app = Celery()
     conf = YamlLoader(app, config_beat, configure_logging=False)
     conf = conf.read_configuration()
-    assert conf == {
-        "beat_schedule": {
-            "beat_it": {
-                "schedule": crontab(hour="9", minute="0", day_of_week="1"),
-                "task": "beat_it",
-            },
+    expected = {
+        "beat_interval": {
+            "schedule": 10,
+            "task": "beat_it",
         },
+        "beat_crontab": {
+            "schedule": crontab(hour="9", minute="0", day_of_week="1"),
+            "task": "beat_it",
+        },
+    }
+    assert conf == {
+        "beat_schedule": expected,
         "broker_url": "amqp://guest:guest@rabbitmq:5672/",
         "imports": [
             "helloworld.tasks",
         ],
     }
-    assert app.conf.beat_schedule == {
-        "beat_it": {
-            "schedule": crontab(hour="9", minute="0", day_of_week="1"),
-            "task": "beat_it",
-        },
-    }
+    assert app.conf.beat_schedule == expected
 
 
 def test_loader_celery_broker_in_environ(monkeypatch):
