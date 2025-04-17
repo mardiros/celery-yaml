@@ -53,41 +53,44 @@ dependencies = [
     { name = "pyyaml" },
 ]
 
+[package.optional-dependencies]
+pyramid = [
+    { name = "plaster-yaml" },
+    { name = "pyramid" },
+]
+
 [package.dev-dependencies]
 dev = [
     { name = "celery" },
     { name = "coverage" },
     { name = "mypy" },
+    { name = "pyramid" },
     { name = "pyramid-helloworld" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "types-pyyaml" },
-]
-pyramid = [
-    { name = "plaster-yaml" },
-    { name = "pyramid" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "celery", specifier = ">=5.4.0,<6" },
     { name = "envsub", specifier = ">=0.1.15,<1" },
+    { name = "plaster-yaml", marker = "extra == 'pyramid'", specifier = ">=2.0,<3" },
+    { name = "pyramid", marker = "extra == 'pyramid'", specifier = ">=1.9,<3" },
     { name = "pyyaml", specifier = ">=6.0.0,<7" },
 ]
+provides-extras = ["pyramid"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "celery", specifier = ">=5.2.0,<6" },
     { name = "coverage", specifier = ">=6.2,<7" },
     { name = "mypy", specifier = ">=1.13.0,<2" },
-    { name = "pyramid-helloworld", specifier = ">=2.0.0" },
+    { name = "pyramid", specifier = ">=1.9,<3" },
+    { name = "pyramid-helloworld", specifier = ">=2.0.0,<3" },
     { name = "pytest", specifier = ">=8.3.3,<9" },
     { name = "pytest-cov", specifier = ">=5.0.0,<6" },
     { name = "types-pyyaml", specifier = ">=6.0.12.20240917,<7" },
-]
-pyramid = [
-    { name = "plaster-yaml", specifier = ">=2.0,<3" },
-    { name = "pyramid", specifier = ">=1.9,<3" },
 ]
 
 [[package]]
