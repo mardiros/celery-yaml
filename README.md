@@ -8,13 +8,11 @@ command in order to inject its configuration.
 
 It also handle help to configurate this application for Pyramid application.
 
-
 ## Usage
 
 ```sh
 celery -A my_application.module_containing_my.app worker --yaml development.yaml ...
 ```
-
 
 This will configure the application `my_application` containing an application
 `app` in a submodule `module_containing_my`.
@@ -34,10 +32,10 @@ add_yaml_option(app)
 
 ```yaml
 celery:
-  broker_url: 'amqp://guest:guest@localhost:5672//'
-  result_backend: 'rpc://'
+  broker_url: "amqp://guest:guest@localhost:5672//"
+  result_backend: "rpc://"
   imports:
-      - my_application.tasks
+    - my_application.tasks
   # see all settings in the celery docs:
   # https://docs.celeryproject.org/en/stable/userguide/configuration.html
 
@@ -48,26 +46,71 @@ logging:
 ```
 
 ---
+
 **NOTE**
 
-The broker_url can also be override by an environment variable `CELERY_BROKER_URL`
-to avoid password in the configuration file.
+To **avoid password in** the **configuration file**:
+
+- Every variables can be substitute with an environment variable.
+  The yaml file will replace variable using [envsub](https://mardiros.github.io/envsub/).
+
+  ```yaml
+  celery:
+    broker_url: "${CELERY_BROKER_URL-amqp://guest:guest@localhost:5672//}"
+
+  ```
+
+- **DEPRECATED**: The `broker_url` is always overriden by the environment variable
+  `CELERY_BROKER_URL` without any declaration.
+
 ---
+
+### Using celery beat
+
+Celery beat can schedule tasks using interval or crontab.
+
+The schedule parameter can be an int, a float or a mapping.
+If it is a mapping, it will be cast to a [crontab](https://docs.celeryq.dev/en/stable/reference/celery.schedules.html#celery.schedules.crontab),
+the mapping will be passed as acrontab parameters.
+
+```yaml
+celery:
+  beat_schedule:
+    beat_second:
+      task: beat_it
+      schedule: 10 # example of interval schedule, every 10 seconds
+
+    beat_crontab:
+      task: beat_it
+      schedule: # example of crontab
+        hour: 9
+        minute: 0
+        day_of_week: 1
+```
 
 ## Using Celery in a Pyramid App.
 
 The extras "pyramid" must be added to install the extras depencencies.
 
+### With PEP 621 (uv, pdm, ...)
+
+```toml
+[dependency-groups]
+celery = ["celery >=5.2.7,<6", "celery-yaml[pyramid]>=2.0.0,<3"]
+
+[project.entry-points."paste.app_factory"]
+main = "pyramid_helloworld:main"
+
+[project.entry-points."celery_yaml.app"]
+main = "pyramid_helloworld.backend:app"
+```
+
 ### With poetry
 
 ```toml
 [tool.poetry.dependencies]
-celery-yaml = { version = "^0.1.3", extras = ["pyramid"] }
-```
+celery-yaml = { version = "^2.0.0", extras = ["pyramid"] }
 
-Then some entry_points have to configure, such as:
-
-```toml
 [tool.poetry.plugins."paste.app_factory"]
 main = "pyramid_app.wsgi:main"
 
@@ -85,14 +128,13 @@ of a yaml file instead of an `ini` file to configure it.
 Then the `celery_yaml.app` is used by `celery-yaml` as an entrypoint to
 the celery app.
 
-
 Then, in the configuration file,
 
 ```yaml
 celery: &celery
-  result_backend: 'rpc://'
+  result_backend: "rpc://"
   imports:
-      - pyramid_app.tasks
+    - pyramid_app.tasks
 
 app:
   "use": "egg:pyramid_app"
@@ -125,7 +167,6 @@ class Celery(CeleryBase):
 
 This is particullary usefull for depenency injection purpose.
 
-
 #### Environment substitution
 
 ```yaml
@@ -133,7 +174,7 @@ celery:
   broker_url: ${CELERY_BROKER_URL}
   result_backend: ${CELERY_BACKEND_RESULT}
   imports:
-      - pyramid_app.tasks
+    - pyramid_app.tasks
 
 database_dsn: ${DATABASE_DSN}
 ```
@@ -146,7 +187,6 @@ in the yaml that are substituted in the configuration during the yaml load.
 This is particullary usefull to keep your configuration structured but keep
 secrets in environment variable, for security reason. And also to build docker
 container that can be easily customizable.
-
 
 #### See full example in the examples directory:
 
