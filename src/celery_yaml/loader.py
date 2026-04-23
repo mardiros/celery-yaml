@@ -28,8 +28,12 @@ def on_preload_parsed(options: Mapping[str, Any], **kwargs: Any) -> None:
         print("You must provide the --yaml argument")
         sys.exit(-1)
 
-    loader = YamlLoader(app, config=config_path, config_key=config_key)
-    loader.read_configuration()
+    try:
+        loader = YamlLoader(app, config=config_path, config_key=config_key)
+        loader.read_configuration()
+    except Exception:
+        log.exception("An error occured while loading YAML configuration")
+        raise  # Will be ignored by celery
 
 
 def add_yaml_option(app: Celery) -> None:
