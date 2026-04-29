@@ -29,7 +29,7 @@ fmt:
     uv run ruff format src tests
 
 release major_minor_patch: test && changelog
-    uvx --with=pdm,pdm-bump --python-preference system pdm bump {{major_minor_patch}}
+    uv version --bump {{major_minor_patch}}
     uv sync --group dev --group pyramid --frozen
 
 changelog:
@@ -40,10 +40,10 @@ changelog:
     $EDITOR CHANGELOG.md
 
 publish:
-    git commit -am "Release $(uv run scripts/get_version.py)"
+    git commit -am "Release $(uv version --short --color=never)"
     git push
-    git tag "v$(uv run scripts/get_version.py)"
-    git push origin "v$(uv run scripts/get_version.py)"
+    git tag "v$(uv version --short --color=never)"
+    git push origin "v$(uv version --short --color=never)"
 
 #[doc("write eggs for testing")]
 write_eggs:
