@@ -1,3 +1,7 @@
+## 2.2.1 - Released on 2026-04-29
+* Log exception in case yaml file is invalid, because celery eat it.
+* Update releasing script 
+
 ## 2.2.0 - Released on 2025-04-17
 * Implement crontab for schedule. 
 
