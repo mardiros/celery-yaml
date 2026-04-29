@@ -2,7 +2,7 @@ package := 'celery_yaml'
 default_test_suite := 'tests'
 
 install:
-    uv sync --group dev --group pyramid
+    uv sync --group dev --extra pyramid
 
 lint:
     uv run ruff check .
@@ -30,7 +30,7 @@ fmt:
 
 release major_minor_patch: test && changelog
     uv version --bump {{major_minor_patch}}
-    uv sync --group dev --group pyramid --frozen
+    uv sync --group dev --extra pyramid --frozen
 
 changelog:
     uv run python scripts/write_changelog.py
