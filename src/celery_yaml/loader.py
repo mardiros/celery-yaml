@@ -3,6 +3,7 @@
 import logging
 import os
 import sys
+import traceback
 from collections.abc import Iterator, Mapping
 from logging.config import dictConfig
 from typing import Any, Tuple
@@ -32,8 +33,8 @@ def on_preload_parsed(options: Mapping[str, Any], **kwargs: Any) -> None:
         loader = YamlLoader(app, config=config_path, config_key=config_key)
         loader.read_configuration()
     except Exception:
-        log.exception("An error occured while loading YAML configuration")
-        raise  # Will be ignored by celery
+        traceback.print_exc()
+        sys.exit(1)
 
 
 def add_yaml_option(app: Celery) -> None:
