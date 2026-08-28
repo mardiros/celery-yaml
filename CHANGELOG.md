@@ -1,3 +1,6 @@
+## 2.2.2 - Released on 2026-08-28
+* Use alternatives method to crash the process if the yaml is invalid. 
+
 ## 2.2.1 - Released on 2026-04-29
 * Log exception in case yaml file is invalid, because celery eat it.
 * Update releasing script 
