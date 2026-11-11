@@ -7,6 +7,9 @@ install:
 update:
     uv sync --group dev --extra pyramid
 
+upgrade:
+    uv sync --group dev --extra pyramid --upgrade
+
 lint:
     uv run ruff check .
 
