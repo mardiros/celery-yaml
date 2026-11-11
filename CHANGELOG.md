@@ -1,3 +1,7 @@
+## 2.3.0 - Released on 2026-11-11
+* Add support of python 3.13, 3.14 and 3.15.
+* Drop support of python 3.9 and 3.10.
+
 ## 2.2.2 - Released on 2026-08-28
 * Use alternatives method to crash the process if the yaml is invalid. 
 
