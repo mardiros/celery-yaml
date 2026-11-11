@@ -36,7 +36,6 @@ fmt:
 
 release major_minor_patch: test && changelog
     uv version --bump {{major_minor_patch}}
-    uv sync --group dev --extra pyramid --frozen
 
 changelog:
     uv run python scripts/write_changelog.py
