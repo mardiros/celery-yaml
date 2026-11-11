@@ -2,7 +2,13 @@ package := 'celery_yaml'
 default_test_suite := 'tests'
 
 install:
+    uv sync --group dev --extra pyramid --frozen
+
+update:
     uv sync --group dev --extra pyramid
+
+upgrade:
+    uv sync --group dev --extra pyramid --upgrade
 
 lint:
     uv run ruff check .

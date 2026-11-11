@@ -1,4 +1,5 @@
 import os
+from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
 from celery import Celery
@@ -7,8 +8,8 @@ try:
     from plaster_yaml.loader import resolve_use
 except ImportError:
 
-    def resolve_use(use: str, entrypoint: str) -> Any:
-        raise LookupError("Install celery_yaml[pyramid]")
+    def resolve_use(use: str, entrypoint: str) -> Callable[..., Any]:
+        raise LookupError("Install celery-yaml[pyramid]")
 
 
 if TYPE_CHECKING:
